@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import { useRef } from "react";
 import { useTodo } from "~/src/contexts/TodoListContext";
+import addZerosTo2DigitNumber from "~/src/utils/addZerosTo2DigitNumber";
 import Box from "../core/Box";
 import Text from "../core/Text";
 
@@ -37,7 +38,7 @@ export default function TodoForm({
         type="time"
         ref={timeRef}
         {...time && {
-          defaultValue: `${`${time.getHours()}`.padStart(2, '0')}:${`${time.getMinutes()}`.padStart(2, '0')}`
+          defaultValue: `${addZerosTo2DigitNumber(time.getHours())}:${addZerosTo2DigitNumber(time.getMinutes())}`
         }}
         marginTop="1rem"
       />
@@ -54,7 +55,7 @@ export default function TodoForm({
         width="100%"
         onClick={() => {
           if (timeRef.current.value && nameRef.current.value) {
-            const newDate = new Date(`${date.getFullYear()}-${`${date.getMonth() + 1}`.padStart(2, '0')}-${`${date.getDate()}`.padStart(2, '0')}T${timeRef.current.value}:00`);
+            const newDate = new Date(`${date.getFullYear()}-${addZerosTo2DigitNumber(date.getMonth() + 1)}-${addZerosTo2DigitNumber(date.getDate())}T${timeRef.current.value}:00`);
             const newName = nameRef?.current.value;
             
             editTodoList({

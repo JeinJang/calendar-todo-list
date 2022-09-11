@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTodo } from "~/src/contexts/TodoListContext";
+import addZerosTo2DigitNumber from "~/src/utils/addZerosTo2DigitNumber";
 import Box from "../core/Box";
 import Text from "../core/Text";
 import TodoForm from "./TodoForm";
@@ -19,7 +20,7 @@ export default function TodoItem({id, name, time, isCurrent, setCurrent}: Props)
     <>
       <Box display="flex">
         <Text marginRight="0.5rem">
-          {`${time.getHours()}`.padStart(2, '0')} : {`${time.getMinutes()}`.padStart(2, '0')}
+          {addZerosTo2DigitNumber(time.getHours())} : {addZerosTo2DigitNumber(time.getMinutes())}
         </Text>
         <Text>{name}</Text>
         <Box
