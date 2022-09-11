@@ -1,6 +1,8 @@
 import Box from "../core/Box";
 import Text from "../core/Text";
 
+const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
 type Props = {
   year: Number;
   month: Number;
@@ -34,6 +36,23 @@ export default function CalendarHeader({
         >
           다음 달
         </Box>
+      </Box>
+      <Box
+        display="grid"
+        gridTemplateColumns="repeat(7, 1fr)"
+        width="100%"
+        border="3px solid black"
+      >
+        {days.map(d => (
+          <Box 
+            key={d} 
+            textAlign="center" 
+            backgroundColor="#757575" 
+            color="white"
+          >
+            <Text>{d}</Text>
+          </Box>
+        ))}
       </Box>
     </>        
   );

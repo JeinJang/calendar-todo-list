@@ -37,6 +37,9 @@ export default function Calendar() {
         gridTemplateColumns="repeat(7, 1fr)"
         gap="1px"
         width="100%"
+        borderLeft="3px solid black"
+        borderRight="3px solid black"
+        borderBottom="3px solid black"
       >
         {/* Date에서 date부분에 0을 넣으면 이전 달의 마지막을 return */}
         {Array.from({
