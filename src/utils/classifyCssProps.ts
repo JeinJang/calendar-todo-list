@@ -17,6 +17,8 @@ const cssProperties = Object.values(Styles).map(
   'userSelect',
   'transform',
   'transition',
+  'gridColumnStart',
+  'gap'
 );
 
 export default function classifyCssProps(props: any) {
