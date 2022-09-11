@@ -16,7 +16,7 @@ export default function Calendar() {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      flex="1"
+      flex="2"
     >
       <CalendarHeader
         year={currentYear}
