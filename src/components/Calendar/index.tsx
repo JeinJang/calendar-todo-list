@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Box from "../core/Box";
 import Text from "../core/Text";
+import CalendarHeader from "./CalendarHeader";
 
 export default function Calendar() {
   const now = new Date();
@@ -16,6 +17,20 @@ export default function Calendar() {
       alignItems="center"
       flex="1"
     >
+      <CalendarHeader
+        year={currentYear}
+        month={currentMonth + 1}
+        onClickPreviousMonth={() => {
+          const date = new Date(currentYear, currentMonth, 0);
+          setCurrentMonth(date.getMonth());
+          setCurrentYear(date.getFullYear());
+        }}
+        onClickNextMonth={() => {
+          const date = new Date(currentYear, currentMonth + 2, 0);
+          setCurrentMonth(date.getMonth());
+          setCurrentYear(date.getFullYear());
+        }}
+      />
       <Box
         display="grid"
         gridTemplateColumns="repeat(7, 1fr)"
