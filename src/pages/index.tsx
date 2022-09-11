@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Head from 'next/head';
 import React from 'react';
 import Calendar from '../components/Calendar';
+import Todos from '../components/Todos';
 
 const Container = styled.div`
   display: flex;
@@ -18,6 +19,7 @@ const MainPage = () => {
       </Head>
       <Container>
         <Calendar />
+        <Todos />
       </Container>
     </>
   );
