@@ -3,6 +3,7 @@ import Head from 'next/head';
 import React from 'react';
 import Calendar from '../components/Calendar';
 import Todos from '../components/Todos';
+import TodoListContainer from '../contexts/TodoListContext';
 
 const Container = styled.div`
   display: flex;
@@ -17,10 +18,12 @@ const MainPage = () => {
       <Head>
         <title>todo list</title>
       </Head>
-      <Container>
-        <Calendar />
-        <Todos />
-      </Container>
+      <TodoListContainer>
+        <Container>
+          <Calendar />
+          <Todos />
+        </Container>
+      </TodoListContainer>
     </>
   );
 };
