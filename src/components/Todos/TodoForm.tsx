@@ -1,5 +1,7 @@
 import { nanoid } from "nanoid";
 import { useRef } from "react";
+import { useTodo } from "~/src/contexts/TodoListContext";
+import addZerosTo2DigitNumber from "~/src/utils/addZerosTo2DigitNumber";
 import Box from "../core/Box";
 import Text from "../core/Text";
 
@@ -10,8 +12,6 @@ export default function TodoForm({
   name,
   id,
   closeForm,
-  todoList,
-  setTodoList,
 }: {
   date: Date,
   type: 'create'|'update',
@@ -19,9 +19,8 @@ export default function TodoForm({
   name?: string,
   id?: string,
   closeForm: () => void,
-  todoList: any,
-  setTodoList?: any,
 }) {
+  const { editTodoList } = useTodo();
   const timeRef = useRef(null);
   const nameRef = useRef(null)
   return (
@@ -39,7 +38,7 @@ export default function TodoForm({
         type="time"
         ref={timeRef}
         {...time && {
-          defaultValue: `${`${time.getHours()}`.padStart(2, '0')}:${`${time.getMinutes()}`.padStart(2, '0')}`
+          defaultValue: `${addZerosTo2DigitNumber(time.getHours())}:${addZerosTo2DigitNumber(time.getMinutes())}`
         }}
         marginTop="1rem"
       />
@@ -56,32 +55,17 @@ export default function TodoForm({
         width="100%"
         onClick={() => {
           if (timeRef.current.value && nameRef.current.value) {
-            const newDate = new Date(`${date.getFullYear()}-${`${date.getMonth() + 1}`.padStart(2, '0')}-${`${date.getDate()}`.padStart(2, '0')}T${timeRef.current.value}:00`);
+            const newDate = new Date(`${date.getFullYear()}-${addZerosTo2DigitNumber(date.getMonth() + 1)}-${addZerosTo2DigitNumber(date.getDate())}T${timeRef.current.value}:00`);
             const newName = nameRef?.current.value;
             
-
-            let arr = [];
-            if (type === 'create') {
-              arr = arr.concat(todoList, [{
-                id: nanoid(),
-                name: newName,
+            editTodoList({
+              type,
+              data: {
                 time: newDate,
-              }]);
-            } else {
-              arr = todoList.map(
-                item => {
-                  if (item.id === id) {
-                    return {
-                      id,
-                      name: newName,
-                      time: newDate,
-                    };
-                  }
-                  return item;
-                }
-              );
-            }
-            setTodoList(arr);
+                name: newName,
+                id: id || null,
+              }
+            })
             closeForm();
           } else if (!timeRef.current.value && nameRef.current.value) {
             alert('시간을 입력해주세요!');

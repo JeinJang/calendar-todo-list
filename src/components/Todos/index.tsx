@@ -1,32 +1,14 @@
 import { useState } from "react";
+import { useTodo } from "~/src/contexts/TodoListContext";
 import Box from "../core/Box";
 import TodoForm from "./TodoForm";
 import TodoItem from "./TodoItem";
 import TodosHeader from "./TodosHeader";
 
 export default function Todos() {
-  const currentDate = new Date();
+  const { todoList, currentDate }: { todoList: any, currentDate: Date } = useTodo();
   const [isOpen, setOpen] = useState(false);
   const [isCurrent, setCurrent] = useState(null);
-  const [todoList, setTodoList] = useState(
-    [
-      {
-        id: '1',
-        name: '코딩 테스트 하기',
-        time: new Date()
-      },
-      {
-        id: '2',
-        name: '코딩 테스트 하기',
-        time: new Date()
-      },
-      {
-        id: '3',
-        name: '코딩 테스트 하기',
-        time: new Date()
-      }
-    ]
-  );
   
   return (
     <Box
@@ -38,15 +20,17 @@ export default function Todos() {
     >
       <TodosHeader date={currentDate} />
       <Box marginBottom="auto">
-        {todoList.map(
+        {todoList[currentDate.toLocaleDateString()]?.sort(
+          function (a, b) {
+            return new Date(a.time) >= new Date(b.time) ? 1 : -1;
+          }
+        ).map(
           todo => (
             <TodoItem
               key={todo.id}
               id={todo.id}
               name={todo.name}
-              time={todo.time}
-              todoList={todoList}
-              setTodoList={setTodoList}
+              time={new Date(todo.time)}
               isCurrent={isCurrent}
               setCurrent={setCurrent}
             />
@@ -58,8 +42,6 @@ export default function Todos() {
           date={currentDate}
           type="create"
           closeForm={() => setOpen(false)}
-          todoList={todoList}
-          setTodoList={setTodoList}
         />
       )}
       <Box 

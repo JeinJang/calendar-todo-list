@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTodo } from "~/src/contexts/TodoListContext";
 import Box from "../core/Box";
 import Text from "../core/Text";
 import CalendarHeader from "./CalendarHeader";
@@ -9,6 +10,7 @@ export default function Calendar() {
   const [currentYear, setCurrentYear] = useState(now.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(now.getMonth());
 
+  const { currentDate, setCurrentDate } = useTodo();
   return (
     <Box
       padding="2rem"
@@ -61,8 +63,9 @@ export default function Calendar() {
             <CalendarItem
               key={`${currentMonth + 1}월 ${val.getDate()}일`}
               date={val.getDate()}
-              isSelected={now.toLocaleDateString() === val.toLocaleDateString()}
+              isSelected={currentDate.toLocaleDateString() === val.toLocaleDateString()}
               gridColumnStart={`${val.getDay() + 1}`}
+              onClick={() => setCurrentDate(val)}
             />
           )
         )}
